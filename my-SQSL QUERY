@@ -1,0 +1,73 @@
+show databases
+create database aws
+show tables
+use aws
+select * from join_all_data limit 5;
+alter table join_all_data
+ALTER TABLE join_all_data DROP COLUMN `Unnamed: 0`;
+select * from join_all_data where Name ='Matthew Denman';
+select * from join_all_data where StoreKey between 5 and 7;
+select distinct CustomerKey from join_all_data;
+select distinct * from join_all_data;
+-- order wise--
+select *from join_all_data order by CustomerKey;
+-- order wise--
+select * from join_all_data where CustomerKey='325'order by 'Order Number','Line Item','StoreKey' ;
+-- customs order --
+select * from join_all_data where CustomerKey='325'order by 'Order Number','Line Item',
+'StoreKey',(case  when 'Color'='Black' then 1  when 'Color'= 'Grey' then 2 
+when 'Color'= 'silver' then 3  when 'Color' = 'White' then 4 end ) ;
+-- customs order --
+SELECT * 
+FROM join_all_data 
+WHERE CustomerKey = '325' 
+ORDER BY 
+    `Order Number`, 
+    `Line Item`, 
+    `StoreKey`,
+    (CASE 
+        WHEN Color = 'Black' THEN 1
+        WHEN Color = 'Grey' THEN 2
+        WHEN Color = 'Silver' THEN 3
+        WHEN Color = 'White' THEN 4
+        ELSE 5 -- This handles any other colors not specified
+    END);
+-- unique value find --
+SELECT COUNT(DISTINCT CustomerKey) FROM join_all_data;
+-- count deatils --
+SELECT COUNT(*) FROM join_all_data where StoreKey = 2 ;
+-- sum of Quanity--
+select sum(Quantity) from join_all_data where Gender = 'Male';
+-- number of country--
+select count( distinct store_country) from join_all_data; 
+-- max--
+select max(Quantity) from join_all_data;
+-- avg --
+select avg(Quantity) from join_all_data;
+
+-- find the total sales store key wise--
+
+SELECT `Square Meters`, `store_country`, `store_state`,`StoreKey`,sum(Quantity) AS total_quantity
+FROM join_all_data
+GROUP BY  `StoreKey`
+order by StoreKey ;
+
+SELECT `Square Meters`, `store_country`, `store_state`,`StoreKey`,sum(Quantity) AS total_quantity
+FROM join_all_data
+GROUP BY  `StoreKey`
+order by total_quantity;
+
+SELECT `Square Meters`, `store_country`, `store_state`,`StoreKey`,sum(Quantity) AS total_quantity
+FROM join_all_data
+GROUP BY  `StoreKey`
+order by `Square Meters`desc;
+
+
+
+
+
+
+
+
+
+
